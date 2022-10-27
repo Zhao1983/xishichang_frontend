@@ -561,7 +561,7 @@ export default {
 
         this.paramCart = this.$route.query && this.$route.query.param
         this.totalGoodsPrice = this.$route.query && this.$route.query.price
-        this.deliveryId = localStorage.getItem('deliveryid') === '' ? 0 : localStorage.getItem('deliveryid') // 배송지변경페지에서 설정한 배송지아이디쿠키정보 얻기
+        this.deliveryId = localStorage.getItem('deliveryid') && localStorage.getItem('deliveryid') === '' ? 0 : localStorage.getItem('deliveryid') // 배송지변경페지에서 설정한 배송지아이디쿠키정보 얻기
 
         this.checkRunTimeMarket()
         this.getProfileData()
@@ -818,7 +818,7 @@ export default {
             this.$nuxt.$emit('handleLoading', true)
             const query = {
                 nums: this.paramCart,
-                deliveryId: parseInt(this.deliveryId)
+                deliveryId: this.deliveryId ? parseInt(this.deliveryId) : 0
             }
 
             getDelivery(query).then(response => {
