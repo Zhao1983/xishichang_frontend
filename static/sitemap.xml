@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- home -->
+  <url>
+    <loc>https://yjxishi.com/</loc>
+    <lastmod>2022-06-30</lastmod>
+    <changefreq>always</changefreq>
+  </url>
+  <!-- home end -->
+  <!-- search view -->
+  <url>
+    <loc>https://yjxishi.com/search/search_input/</loc>
+    <lastmod>2022-06-30</lastmod>
+    <changefreq>always</changefreq>
+  </url>
+  <!-- search view end -->
+  <!-- type view -->
+  <url>
+    <loc>https://yjxishi.com/type/type_detail?id=11&amp;subid=0</loc>
+    <lastmod>2022-06-30</lastmod>
+    <changefreq>always</changefreq>
+  </url>  
+  <!-- type end -->
+  <!-- search result -->
+  <url>
+    <loc>https://yjxishi.com/search/search_result?word=辣白菜&amp;typeid=0</loc>
+    <lastmod>2022-06-30</lastmod>
+    <changefreq>always</changefreq>
+  </url>
+  <!-- search result end -->
+  <!-- shop -->
+  <url>
+    <loc>https://yjxishi.com/shop/shop_detail?shopid=71&amp;productid=0</loc>
+    <lastmod>2022-06-30</lastmod>
+    <changefreq>always</changefreq>
+  </url>
+  <!-- shop end -->
+  <!-- product detail -->
+  <url>
+    <loc>https://yjxishi.com/goods/goods_detail?shopid=1&amp;productid=334</loc>
+    <lastmod>2022-06-30</lastmod>
+    <changefreq>always</changefreq>
+  </url>
+  <!-- product detail end -->
+</urlset>

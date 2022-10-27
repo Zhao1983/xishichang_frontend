@@ -1,0 +1,326 @@
+body {
+    max-width: 500px;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    line-height: 1.2;
+    font-family: 'PingFang Regular', sans-serif !important;
+    background-color: #fff !important;
+    -webkit-text-size-adjust: 100% !important;
+    -moz-text-size-adjust: 100% !important;
+    -ms-text-size-adjust: 100% !important;
+}
+
+html {
+    background-color: #fff;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+}
+
+#__nuxt {
+    height: 100%;
+}
+
+#__layout {
+    height: 100%;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.container {
+    padding: 0 !important;
+    margin: 0 !important;
+    background-color: #f5f6fd;
+    max-width: 100%;
+    height: 100%;
+}
+
+.spinner_overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .1);
+    z-index: 8000;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.white_overlay {
+    max-width: 500px;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    opacity: 1;
+    background-color: #fff;
+    z-index: 8000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back_overlay {
+    max-width: 500px;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .6);
+    z-index: 2000;
+}
+
+.back_overlay_black {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 1);
+    z-index: 2000;
+}
+
+.back_overlay_1 {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .6);
+    z-index: 4000;
+}
+
+::-webkit-input-placeholder {
+    color: #b1b1b1;
+    font-weight: normal;
+}
+
+input::-ms-clear,
+input::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration {
+    display: none;
+}
+
+.notice-overlay {
+    max-width: 500px;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .6);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notice-dialog {
+    z-index: 3000;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -50px;
+}
+
+.notice-dialog-content {
+    width: 90%;
+    text-align: center;
+}
+
+.notice-dialog-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.notice-dialog-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.notice-dialog-option .left-item {
+    font-size: 15px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.notice-dialog-option .right-item {
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+}
+
+.dialog-normal-warning {
+    max-width: 425px;
+    position: fixed;
+    top: 35%;
+    background: #fff;
+    z-index: 3000;
+    width: 80%;
+    margin-left: 2.5rem;
+    border-radius: 15px;
+}
+
+.dialog-setting {
+    position: fixed;
+    top: 30%;
+    background: #fff;
+    z-index: 3000;
+    width: 80%;
+    left: 10%;
+    margin-left: 0;
+    border-radius: 15px;
+}
+
+.dialog-map {
+    position: fixed;
+    top: 10%;
+    background: #fff;
+    z-index: 4000;
+    width: 91%;
+    left: 4%;
+    bottom: 10%;
+    margin-left: 0;
+    border-radius: 10px;
+}
+
+.dialog-delivery {
+    max-width: 425px;
+    position: fixed;
+    top: 20%;
+    background: #fff;
+    z-index: 3000;
+    width: 85%;
+    margin-left: 1.5%;
+    border-radius: 10px;
+}
+
+.dialog-payment {
+    position: fixed;
+    top: 25%;
+    background: #fff;
+    z-index: 3000;
+    width: 80%;
+    left: 10%;
+    margin-left: 0;
+    border-radius: 10px;
+}
+
+.dialog-info {
+    position: fixed;
+    top: 25%;
+    background: #fff;
+    z-index: 3000;
+    width: 80%;
+    left: 10%;
+    margin-left: 0;
+    border-radius: 10px;
+}
+
+.dialog-header {
+    width: 100%;
+    height: 30px;
+    z-index: 10;
+    padding-top: 15px;
+}
+
+.dialog-header .tag-close {
+    width: 15px;
+    height: 15px;
+    float: right;
+    margin-right: 15px;
+}
+
+.dialog-title {
+    width: 100%;
+    margin-top: 7px;
+    text-align: center;
+}
+
+.dialog-title .tag-title {
+    font-size: 17px;
+    color: #222222;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+.dialog-content {
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+    padding: 0 15px;
+    font-size: 15px;
+    word-wrap: break-word;
+    line-height: 1.3;
+    color: #222222;
+}
+
+.dialog-footer {
+    width: 100%;
+    padding: 30px 20px 18px 20px;
+}
+
+.dialog-footer .btn-1 {
+    width: 85%;
+    padding: 9px 0;
+    margin: 0 auto;
+    font-size: 14px;
+    border-radius: 30px;
+}
+
+.v-lazy-image {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.v-lazy-image-loaded {
+    opacity: 1;
+}
+
+.toasted-container .toasted {
+    top: 35px;
+    clear: both;
+    position: relative;
+    height: auto;
+    word-break: normal;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    box-sizing: inherit;
+    margin: 5px auto 20px auto;
+}
+
+.toasted.bubble {
+    border-radius: 30px !important;
+    min-height: 28px;
+    background-color: #000 !important;
+    padding: 0 20px;
+    font-size: 13px;
+    font-weight: 300;
+    color: #fff;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+}
