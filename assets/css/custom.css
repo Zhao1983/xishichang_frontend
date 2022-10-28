@@ -1124,6 +1124,14 @@ input:checked+.slider:before {
     background-color: #37c2a8;
 }
 
+.order-condition-price {
+    padding: 3px;
+    background-color: #fff8e7;
+    border-radius: 3px;
+    display: inline-block;
+    color: #e5841c !important;
+}
+
 @media (max-width: 320px) {
     .goods-detail-thumbnail {
         height: 320px;
