@@ -288,7 +288,7 @@
                             </div>
                             <div class="col-xs-6">
                                 <div v-if="freePackageNeededPrice !== 0" class="font-cf00-13 pt-2 order-condition-price">免包装费还差 {{ freePackageNeededPrice | addComma }} 元</div>
-                                <div v-else class="font-222-13 text-right" style="text-decoration: line-through;">{{ packagePrice | addComma }} 元</div>
+                                <div v-else class="font-222-13 text-right" style="text-decoration: line-through;">{{ packageOldPrice | addComma }} 元</div>
                             </div>
                             <div class="col-xs-3">
                                 <div v-if="deliveryItems.length !== 0 || freePackageNeededPrice !== 0" class="font-222-14 fr font-weight">¥{{ packagePrice | addComma }}</div>
@@ -308,7 +308,7 @@
                             </div>
                             <div class="col-xs-6">
                                 <div v-if="freeShippingNeededPrice !== 0" class="font-cf00-13 pt-2 order-condition-price">免运费还差 {{ freeShippingNeededPrice | addComma }} 元</div>
-                                <div v-else class="font-222-13 text-right" style="text-decoration: line-through;">{{ (totalDeliveryEventPrice + totalDeliveryCompanyPrice) | addComma }} 元</div>
+                                <div v-else class="font-222-13 text-right" style="text-decoration: line-through;">{{ (totalDeliveryEventPrice + totalDeliveryCompanyOldPrice) | addComma }} 元</div>
                             </div>
                             <div class="col-xs-3">
                                 <!-- 배달배송이면 배달비만 로출 -->
@@ -558,6 +558,7 @@ export default {
             houseNo: '', // 상세주소
             packageNum: 0, // 포장수량
             packagePrice: 0, // 포장가격
+            packageOldPrice: 0, // 이전포장가격
             freePackageStatus: '0', // 무료포장상태여부
             freeShippingStatus: '0', // 무료배송상태여부
             freePackageNeededPrice: 0, // 무료포장기준필요가격
@@ -895,6 +896,7 @@ export default {
                         if (this.eventItems && this.eventItems.goodsImgs.length !== 0) {
                             this.totalGoodsWeight += this.eventItems.totalGoodsWeight
                             this.packagePrice += this.eventItems.packagePrice
+                            this.packageOldPrice += this.eventItems.packageOriPrice + this.packagePrice
                             this.totalPackageWeight += this.eventItems.packageWeight
                             this.totalDeliveryEventPrice = this.eventItems.totalDeliveryPrice
                         }
@@ -1013,6 +1015,7 @@ export default {
                 this.totalDeliveryCompanyPrice = 0
                 this.useDeliveryCompany = []
                 this.packagePrice = 0
+                this.packageOldPrice = 0
                 this.totalGoodsWeight = 0
                 this.totalPackageWeight = 0
                 this.totalDeliveryEventPrice = 0
@@ -1055,6 +1058,7 @@ export default {
                 if (this.eventItems && this.eventItems.goodsImgs.length !== 0) {
                     this.totalGoodsWeight += this.eventItems.totalGoodsWeight
                     this.packagePrice += this.eventItems.packagePrice
+                    this.packageOldPrice += this.eventItems.packageOriPrice + this.packagePrice
                     this.totalPackageWeight += this.eventItems.packageWeight
                     this.totalDeliveryEventPrice = this.eventItems.totalDeliveryPrice
                 }
