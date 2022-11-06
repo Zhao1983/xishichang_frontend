@@ -287,11 +287,15 @@
                                 <div class="font-222-15">包装费</div>
                             </div>
                             <div class="col-xs-6">
-                                <div v-if="freePackageNeededPrice !== 0" class="font-cf00-13 pt-2 order-condition-price">免包装费还差 {{ freePackageNeededPrice | addComma }} 元</div>
-                                <div v-else class="font-222-13 text-right" style="text-decoration: line-through;">{{ packageOldPrice | addComma }} 元</div>
+                                <div v-if="freePackageNeededPrice !== 0" class="font-cf00-13 pt-2 order-condition-price custom-tooltip">
+                                    <span class="tooltiptext tooltip-top">该活动仅限指定商品哦！</span>
+                                    <span>免包装费还差 {{ freePackageNeededPrice | addComma }} 元</span>
+                                    <img class="ml-3" src="../../assets/images/ico_help.png" alt="" style="width: 13px; height: 13px;">
+                                </div>
+                                <div v-else-if="type !== 'runner' && freePackageStatus === '1' && freeEventPackageStatus === '1'" class="font-222-13 text-right" style="text-decoration: line-through;">{{ packageOldPrice | addComma }} 元</div>
                             </div>
                             <div class="col-xs-3">
-                                <div v-if="deliveryItems.length !== 0 || freePackageNeededPrice !== 0" class="font-222-14 fr font-weight">¥{{ packagePrice | addComma }}</div>
+                                <div v-if="deliveryItems.length !== 0 || freePackageNeededPrice !== 0 || freePackageStatus === '0'" class="font-222-14 fr font-weight">¥{{ packagePrice | addComma }}</div>
                                 <div v-else class="font-222-14 fr font-weight">免包装费</div>
                             </div>
                         </b-row>
@@ -307,8 +311,14 @@
                                 </div>
                             </div>
                             <div class="col-xs-6">
-                                <div v-if="freeShippingNeededPrice !== 0" class="font-cf00-13 pt-2 order-condition-price">免运费还差 {{ freeShippingNeededPrice | addComma }} 元</div>
-                                <div v-else class="font-222-13 text-right" style="text-decoration: line-through;">{{ (totalDeliveryEventPrice + totalDeliveryCompanyOldPrice) | addComma }} 元</div>
+                                <div v-if="freeShippingNeededPrice !== 0" class="font-cf00-13 pt-2 order-condition-price custom-tooltip">
+                                    <span class="tooltiptext tooltip-top">该活动仅限指定商品哦！</span>
+                                    <span>免运费还差 {{ freeShippingNeededPrice | addComma }} 元</span>
+                                    <img class="ml-3" src="../../assets/images/ico_help.png" alt="" style="width: 13px; height: 13px;">
+                                </div>
+                                <div v-else-if="type !== 'runner' && freeEventShippingStatus === '1'" class="font-222-13 text-right" style="text-decoration: line-through;">
+                                    {{ (totalDeliveryEventPrice + totalDeliveryCompanyPrice) | addComma }} 元
+                                </div>
                             </div>
                             <div class="col-xs-3">
                                 <!-- 배달배송이면 배달비만 로출 -->
@@ -533,6 +543,8 @@ export default {
         this.paramCart = this.$route.query && this.$route.query.param
         this.totalGoodsPrice = this.$route.query && this.$route.query.price
         this.deliveryId = localStorage.getItem('deliveryid') && localStorage.getItem('deliveryid') === '' ? 0 : localStorage.getItem('deliveryid') // 배송지변경페지에서 설정한 배송지아이디쿠키정보 얻기
+        this.freeEventPackageStatus = sessionStorage.getItem('site_info') ? JSON.parse(sessionStorage.getItem('site_info')).freeEventPackageStatus : '0'
+        this.freeEventShippingStatus = sessionStorage.getItem('site_info') ? JSON.parse(sessionStorage.getItem('site_info')).freeEventShippingStatus : '0'
 
         this.checkRunTimeMarket()
         this.getProfileData()
@@ -630,7 +642,9 @@ export default {
             deliveryCompanyIndex: 0, // 택배배송회사배렬인덱스값
             freeItems: [], // 무료배송상품배렬
             eventItems: null, // 이벤트상품
-            totalDeliveryEventPrice: 0 // 이벤트상품일 때의 이전배송가격(무료배송조건이 되였을 때)
+            totalDeliveryEventPrice: 0, // 이벤트상품일 때의 이전배송가격(무료배송조건이 되였을 때)
+            freeEventPackageStatus: '0', // 포장무료이벤트설정상태
+            freeEventShippingStatus: '0' // 배송무료이벤트설정상태
         }
     },
     methods: {
@@ -899,6 +913,8 @@ export default {
                             this.packageOldPrice += this.eventItems.packageOriPrice + this.packagePrice
                             this.totalPackageWeight += this.eventItems.packageWeight
                             this.totalDeliveryEventPrice = this.eventItems.totalDeliveryPrice
+                        } else {
+                            this.packageOldPrice += this.packagePrice
                         }
                     }
                 }
@@ -1061,6 +1077,8 @@ export default {
                     this.packageOldPrice += this.eventItems.packageOriPrice + this.packagePrice
                     this.totalPackageWeight += this.eventItems.packageWeight
                     this.totalDeliveryEventPrice = this.eventItems.totalDeliveryPrice
+                } else {
+                    this.packageOldPrice += this.packagePrice
                 }
             }
 

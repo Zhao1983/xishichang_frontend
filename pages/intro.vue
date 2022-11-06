@@ -4,7 +4,8 @@
 
 <script>
 import {
-    getSiteTokenData
+    getSiteTokenData,
+    getFreeSettings
 } from '@/api/intro'
 import {
     setAddCart,
@@ -24,12 +25,24 @@ export default {
         const key = this.$route.params && this.$route.query.key
         const type = this.$route.params && this.$route.query.type
         const id = this.$route.params && this.$route.query.id
+        this.getFreeSettings()
         this.getWebInitData(key, id, type)
     },
     data() {
-        return {}
+        return {
+            freeEventShippingStatus: '0',
+            freeEventPackageStatus: '0'
+        }
     },
     methods: {
+        getFreeSettings() {
+            getFreeSettings().then(response => {
+                if (response.res) {
+                    this.freeEventShippingStatus = response.res.data.freeShippingDto ? response.res.data.freeShippingDto.status : '0'
+                    this.freeEventPackageStatus = response.res.data.freePackageDto ? response.res.data.freePackageDto.status : '0'
+                }
+            })
+        },
         getWebInitData(key, ids, type) {
             this.$nuxt.$emit('handleLoading', true)
 
@@ -98,7 +111,9 @@ export default {
                         'freeShippingStatus': response.res.data.freeShippingDto ? response.res.data.freeShippingDto.status : '0',
                         'freeShippingNeededPrice': response.res.data.freeShippingDto ? response.res.data.freeShippingDto.price : 0,
                         'freeShippingProfitRate': response.res.data.freeShippingDto ? response.res.data.freeShippingDto.profitRate : 0,
-                        'goodsIconBeans': value
+                        'goodsIconBeans': value,
+                        'freeEventShippingStatus': this.freeEventShippingStatus,
+                        'freeEventPackageStatus': this.freeEventPackageStatus
                     }))
 
                     // 상품상세페지, 점포상세페지, 분류페지, 즐겨찾기 페지가 아니라면 모든 쿠키정보 초기화

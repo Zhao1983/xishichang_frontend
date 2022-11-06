@@ -23,3 +23,14 @@ export function getWechatData(url) {
         baseURL: define.SHARE_URL + '?url=' + url
     })
 }
+
+/*
+ * 이벤트 적용상태
+ * 
+ * */
+export function getFreeSettings() {
+    return request({
+        url: 'freeSettings',
+        method: 'get'
+    })
+}
