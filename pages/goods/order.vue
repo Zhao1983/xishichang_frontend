@@ -138,39 +138,16 @@
                 </div>
                 <!-- 택배인 경우 택배회사별 주문상품 리스트 -->
                 <div v-else>
-                    <!-- 유료배송인 경우(이전 론리) -->
+                    <!-- 유료배송인 경우 -->
                     <div v-for="(item, index) in deliveryItems" :key="index" class="radius-7 padding-default background-white mb-15">
                         <div class="order-goods-content">
                             <div class="content-header">
-                                <!-- 유료배송인 경우 -->
-                                <div v-if="freeShippingStatus === '0'" class="left-item">
+                                <div class="left-item">
                                     <img v-if="item.deliveryType === 2" class="icon-1" src="../../assets/images/ico_air.png" alt="">
                                     <img v-else class="icon-2" src="../../assets/images/ico_delivery_4.png" alt="">
-                                    <img v-if="item.deliveryCode === 'jtexpress'" class="ml-3" src="../../assets/images/ico_delivery_company_3.png" alt="" style="width: 40px; height: 14px;">
-                                    <img v-else-if="item.deliveryCode === 'yunda'" class="ml-3" src="../../assets/images/ico_delivery_company_1.png" alt="" style="width: 40px; height: 14px;">
-                                    <img v-else-if="item.deliveryCode === 'youzhengguonei'" class="ml-3" src="../../assets/images/ico_delivery_company_2.png" alt="" style="width: 40px; height: 14px;">
-                                    <img v-else-if="item.deliveryCode === 'ems'" class="ml-3" src="../../assets/images/ico_delivery_company_2.png" alt="" style="width: 40px; height: 14px;">
-                                    <img v-else-if="item.deliveryCode === 'ems_2'" class="ml-3" src="../../assets/images/ico_delivery_company_2.png" alt="" style="width: 40px; height: 14px;">
-                                    <img v-else-if="item.deliveryCode === 'shunfeng'" class="ml-3" src="../../assets/images/ico_delivery_company_5.png" alt="" style="width: 40px; height: 14px;">
-                                    <img v-else-if="item.deliveryCode === 'jingdongkuaiyun'" class="ml-3" src="../../assets/images/ico_delivery_company_6.png" alt="" style="width: 40px; height: 14px;">
-                                    <p class="title ml-3">{{ item.deliveryName }}</p>
-                                    <p class="sub-title ml-2">(包裹{{ (index + 1) }})</p>
+                                    <p class="title ml-3">包裹{{ (index + 1) }}</p>
                                 </div>
-                                <!-- 무료배송인 경우 -->
-                                <div v-else class="left-item">
-                                    <img class="icon-2" src="../../assets/images/ico_delivery_4.png" alt="">
-                                    <p class="title ml-3" style="color: #cf000e;">免运费</p>
-                                    <p class="sub-title ml-2">(包裹{{ (index + 1) }})</p>
-                                </div>
-                                <!-- 유료배송인 경우 -->
-                                <div v-if="freeShippingStatus === '0'" class="right-item">
-                                    <p v-if="item.canChangeDelivery === '0'" class="txt-1">不能更换配送公司</p>
-                                    <p v-else class="txt-2" @click="setShowDeliveryCompany(item.deliveryCode, index, item.companyPrices)">选择其它陆运</p>
-                                </div>
-                                <!-- 무료배송인 경우 -->
-                                <div v-else class="right-item">
-                                    <p class="txt-1">不能更换配送公司</p>
-                                </div>
+                                <div class="right-item"></div>
                             </div>
                             <div class="goods-content">
                                 <div class="goods-list">
@@ -208,7 +185,7 @@
                             <span class="font-222-16 font-weight">小计 : ¥{{ (item.deliverySalePrice + item.totalGoodsPrice) | addComma }}</span>
                         </div>
                     </div>
-                    <!-- 무료배송인 경우(이전 론리) -->
+                    <!-- 무료배송인 경우(공장인 조건) -->
                     <div v-if="freeItems[0]" class="radius-7 padding-default background-white mb-15">
                         <div class="order-goods-content">
                             <div class="content-header">
@@ -217,9 +194,7 @@
                                     <p class="title ml-3" style="color: #cf000e;">免运费</p>
                                     <p class="sub-title ml-2">(包裹{{ (deliveryItems.length + 1) }})</p>
                                 </div>
-                                <div class="right-item">
-                                    <p class="txt-1">不能更换配送公司</p>
-                                </div>
+                                <div class="right-item"></div>
                             </div>
                             <div class="goods-content">
                                 <div class="goods-list">
@@ -260,9 +235,7 @@
                                     <p class="title ml-3" style="color: #cf000e;">免运费</p>
                                     <p class="sub-title ml-2">(包裹{{ (deliveryItems.length + freeItems.length + 1) }})</p>
                                 </div>
-                                <div class="right-item">
-                                    <p class="txt-1">不能更换配送公司</p>
-                                </div>
+                                <div class="right-item"></div>
                             </div>
                             <div class="goods-content">
                                 <div class="goods-list">
@@ -314,11 +287,15 @@
                                 <div class="font-222-15">包装费</div>
                             </div>
                             <div class="col-xs-6">
-                                <div v-if="freePackageNeededPrice !== 0" class="font-cf00-13 pt-2" style="padding: 3px; background-color: #fff8e7; border-radius: 3px; display: inline-block; color: #e5841c !important;">免包装费还差 {{ freePackageNeededPrice | addComma }} 元</div>
-                                <div v-if="freePackageStatus === '1' && freePackageNeededPrice === 0" class="font-222-13 text-right" style="text-decoration: line-through;">{{ packagePrice | addComma }} 元</div>
+                                <div v-if="freePackageNeededPrice !== 0" class="font-cf00-13 pt-2 order-condition-price custom-tooltip">
+                                    <span class="tooltiptext tooltip-top">该活动仅限指定商品哦！</span>
+                                    <span>免包装费还差 {{ freePackageNeededPrice | addComma }} 元</span>
+                                    <img class="ml-3" src="../../assets/images/ico_help.png" alt="" style="width: 13px; height: 13px;">
+                                </div>
+                                <div v-else-if="type !== 'runner' && freePackageStatus === '1' && freeEventPackageStatus === '1'" class="font-222-13 text-right" style="text-decoration: line-through;">{{ packageOldPrice | addComma }} 元</div>
                             </div>
                             <div class="col-xs-3">
-                                <div v-if="freePackageStatus === '0'" class="font-222-14 fr font-weight">¥{{ packagePrice | addComma }}</div>
+                                <div v-if="deliveryItems.length !== 0 || freePackageNeededPrice !== 0 || freePackageStatus === '0'" class="font-222-14 fr font-weight">¥{{ packagePrice | addComma }}</div>
                                 <div v-else class="font-222-14 fr font-weight">免包装费</div>
                             </div>
                         </b-row>
@@ -328,15 +305,19 @@
                                 <div v-if="type === 'runner'">
                                     <img class="fl ml-3 mt-2" src="../../assets/images/ico_help.png" alt="" style="width: 13px; height: 13px;" @click="setShowHelp">
                                 </div>
-                                <div v-else>
+                                <div v-else-if="deliveryItems.length !== 0">
                                     <img v-if="!isShowDeliveryInfo" class="fl ml-3 mt-1" src="../../assets/images/ico_bottom_1.png" alt="" style="width: 15px; height: 15px;" @click="isShowDeliveryInfo = !isShowDeliveryInfo">
                                     <img v-else class="fl ml-3 mt-1" src="../../assets/images/ico_top_1.png" alt="" style="width: 15px; height: 15px;" @click="isShowDeliveryInfo = !isShowDeliveryInfo">
                                 </div>
                             </div>
                             <div class="col-xs-6">
-                                <div v-if="freeShippingNeededPrice !== 0" class="font-cf00-13 pt-2" style="padding: 3px; background-color: #fff8e7; border-radius: 3px; display: inline-block; color: #e5841c !important;">免运费还差 {{ freeShippingNeededPrice | addComma }} 元</div>
-                                <div v-if="freeShippingNeededPrice === 0 && totalDeliveryCompanyPrice <= 0" class="font-222-13 text-right" style="text-decoration: line-through;">
-                                    {{ totalDeliveryCompanyOldPrice | addComma }} 元
+                                <div v-if="freeShippingNeededPrice !== 0" class="font-cf00-13 pt-2 order-condition-price custom-tooltip">
+                                    <span class="tooltiptext tooltip-top">该活动仅限指定商品哦！</span>
+                                    <span>免运费还差 {{ freeShippingNeededPrice | addComma }} 元</span>
+                                    <img class="ml-3" src="../../assets/images/ico_help.png" alt="" style="width: 13px; height: 13px;">
+                                </div>
+                                <div v-else-if="type !== 'runner' && freeEventShippingStatus === '1'" class="font-222-13 text-right" style="text-decoration: line-through;">
+                                    {{ (totalDeliveryEventPrice + totalDeliveryCompanyPrice) | addComma }} 元
                                 </div>
                             </div>
                             <div class="col-xs-3">
@@ -346,7 +327,7 @@
                                     <span class="font-222-15 font-weight">¥{{ deliverySalesPrice | addComma }}</span>
                                 </div>
                                 <!-- 택배배송이면 택배회사배송비 로출 -->
-                                <div v-else-if="totalDeliveryCompanyPrice > 0" class="font-222-14 fr font-weight">¥{{ totalDeliveryCompanyPrice | addComma }}</div>
+                                <div v-else-if="totalDeliveryCompanyPrice > 0 && deliveryItems.length !== 0" class="font-222-14 fr font-weight">¥{{ totalDeliveryCompanyPrice | addComma }}</div>
                                 <div v-else class="font-222-14 fr font-weight">免运费</div>
                             </div>
                         </b-row>
@@ -562,6 +543,8 @@ export default {
         this.paramCart = this.$route.query && this.$route.query.param
         this.totalGoodsPrice = this.$route.query && this.$route.query.price
         this.deliveryId = localStorage.getItem('deliveryid') && localStorage.getItem('deliveryid') === '' ? 0 : localStorage.getItem('deliveryid') // 배송지변경페지에서 설정한 배송지아이디쿠키정보 얻기
+        this.freeEventPackageStatus = sessionStorage.getItem('site_info') ? JSON.parse(sessionStorage.getItem('site_info')).freeEventPackageStatus : '0'
+        this.freeEventShippingStatus = sessionStorage.getItem('site_info') ? JSON.parse(sessionStorage.getItem('site_info')).freeEventShippingStatus : '0'
 
         this.checkRunTimeMarket()
         this.getProfileData()
@@ -587,6 +570,7 @@ export default {
             houseNo: '', // 상세주소
             packageNum: 0, // 포장수량
             packagePrice: 0, // 포장가격
+            packageOldPrice: 0, // 이전포장가격
             freePackageStatus: '0', // 무료포장상태여부
             freeShippingStatus: '0', // 무료배송상태여부
             freePackageNeededPrice: 0, // 무료포장기준필요가격
@@ -657,7 +641,10 @@ export default {
             deliveryCompanyCode: '', // 택배배송회사코드
             deliveryCompanyIndex: 0, // 택배배송회사배렬인덱스값
             freeItems: [], // 무료배송상품배렬
-            eventItems: null // 이벤트상품
+            eventItems: null, // 이벤트상품
+            totalDeliveryEventPrice: 0, // 이벤트상품일 때의 이전배송가격(무료배송조건이 되였을 때)
+            freeEventPackageStatus: '0', // 포장무료이벤트설정상태
+            freeEventShippingStatus: '0' // 배송무료이벤트설정상태
         }
     },
     methods: {
@@ -919,6 +906,16 @@ export default {
                                 this.useDeliveryCompany.push(value)
                             }
                         })
+
+                        if (this.eventItems && this.eventItems.goodsImgs.length !== 0) {
+                            this.totalGoodsWeight += this.eventItems.totalGoodsWeight
+                            this.packagePrice += this.eventItems.packagePrice
+                            this.packageOldPrice += this.eventItems.packageOriPrice + this.packagePrice
+                            this.totalPackageWeight += this.eventItems.packageWeight
+                            this.totalDeliveryEventPrice = this.eventItems.totalDeliveryPrice
+                        } else {
+                            this.packageOldPrice += this.packagePrice
+                        }
                     }
                 }
 
@@ -1034,8 +1031,10 @@ export default {
                 this.totalDeliveryCompanyPrice = 0
                 this.useDeliveryCompany = []
                 this.packagePrice = 0
+                this.packageOldPrice = 0
                 this.totalGoodsWeight = 0
                 this.totalPackageWeight = 0
+                this.totalDeliveryEventPrice = 0
 
                 this.deliveryItems.filter(res => {
                     let key = -1
@@ -1071,6 +1070,16 @@ export default {
                         this.useDeliveryCompany.push(value)
                     }
                 })
+
+                if (this.eventItems && this.eventItems.goodsImgs.length !== 0) {
+                    this.totalGoodsWeight += this.eventItems.totalGoodsWeight
+                    this.packagePrice += this.eventItems.packagePrice
+                    this.packageOldPrice += this.eventItems.packageOriPrice + this.packagePrice
+                    this.totalPackageWeight += this.eventItems.packageWeight
+                    this.totalDeliveryEventPrice = this.eventItems.totalDeliveryPrice
+                } else {
+                    this.packageOldPrice += this.packagePrice
+                }
             }
 
             this.isShowDeliveryCompany = false

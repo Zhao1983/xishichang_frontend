@@ -25,8 +25,8 @@
                 </span>
             </div>
             <div class="mt-5" v-if="eventStatus === '1'">
-                <div v-if="freeShippingStatus === '1'" class="free-price-item red" style="display: inline-block;">满 {{ freeShippingNeededPrice | addComma }} 包邮</div>
-                <div v-if="freePackageStatus === '1'" class="free-price-item green" style="display: inline-block;">满 {{ freePackageNeededPrice | addComma }} 免包装费</div>
+                <div v-if="freeShippingNeededPrice !== 0" class="free-price-item red" style="display: inline-block;">满 {{ freeShippingNeededPrice | addComma }} 包邮</div>
+                <div v-if="freePackageNeededPrice !== 0" class="free-price-item green" style="display: inline-block;">满 {{ freePackageNeededPrice | addComma }} 免包装费</div>
             </div>
         </div>
     </div>
