@@ -3,9 +3,9 @@ module.exports = {
      * 로컬 URL
      * 
      */
-    BASE_URL: '192.168.1.132',
-    PORT: '8085',
-    SERVER_URL: 'http://192.168.1.216:9904', // 장타오 로컬서버 URL
+    // BASE_URL: '192.168.1.132',
+    // PORT: '8085',
+    // SERVER_URL: 'http://192.168.1.216:9904', // 장타오 로컬서버 URL
 
     /**
      * 장타오로컬 URL(216서버용)
@@ -35,9 +35,9 @@ module.exports = {
      * 운영서버 URL
      * 
      */
-    // BASE_URL: '127.0.0.1', // 운영서버 URL
-    // PORT: '9009', // 포트
-    // SERVER_URL: 'https://yjxishi.com:9904', // 운영서버 URL
+    BASE_URL: '127.0.0.1', // 운영서버 URL
+    PORT: '9009', // 포트
+    SERVER_URL: 'https://yjxishi.com:9904', // 운영서버 URL
 
     /**
      * 알림다이얼로그 로출날자

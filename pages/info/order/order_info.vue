@@ -788,10 +788,8 @@ export default {
                             this.deliveryData = []
 
                             response.res.data.filter(res => {
-                                if (existStr.slice(0, existStr.length - 1).search(res.deliveryCompanyName) === -1) {
-                                    this.deliveryData.push(res)
-                                    existStr += res.deliveryCompanyName + ','
-                                }
+                                this.deliveryData.push(res)
+                                existStr += res.deliveryCompanyName + ','
                             })
 
                             // 배송회사가 한개 이상이면 배송회사선택팝업 로출

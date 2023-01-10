@@ -55,14 +55,20 @@
                 <div style="display: flex; align-items: center; justify-content: center; border-radius: 20px; height: 23px; border: 1px solid #4aaa35;">
                     <p class="pl-6 pr-6" style="color: #4aaa35; font-size: 12px;">免运费活动</p>
                 </div>
-                <p class="font-222-14 pl-6">活动商品满 {{ freeShippingNeededPrice | addComma }} 元免运费</p>
+                <p class="font-222-14 pl-6">全场满 {{ freeShippingNeededPrice | addComma }} 元免运费</p>
             </div>
             <!-- 장바구니 상품 -->
             <div v-for="(item, index) in cartItems" :key="item.shopId" class="background-white padding-default radius-7 mb-15">
                 <b-row>
                     <div class="col-xs-1">
-                        <input :id="'check-shop-' + index" v-model="item.checked" class="radius-checkbox" type="checkbox" name="" @click="setShop(item.shopId)">
-                        <label :for="'check-shop-' + index"></label>
+                        <div v-if="item.visible">
+                            <input :id="'check-shop-' + index" v-model="item.checked" class="radius-checkbox" type="checkbox" name="" @click="setShop(item.shopId)">
+                            <label :for="'check-shop-' + index"></label>
+                        </div>
+                        <div v-else-if="isShowEdit">
+                            <input :id="'check-shop-' + index" v-model="item.checked" class="radius-checkbox" type="checkbox" name="" @click="setShop(item.shopId)">
+                            <label :for="'check-shop-' + index"></label>
+                        </div>
                     </div>
                     <div class="col-xs-11 pl-5">
                         <b-row>
@@ -126,8 +132,8 @@
                                     </div>
                                 </b-row>
                                 <div class="mt-5" v-if="prod.eventStatus === '1'">
-                                    <div v-if="freeShippingNeededPrice !== 0" class="free-price-item red" style="display: inline-block;">满 {{ freeShippingNeededPrice | addComma }} 包邮</div>
-                                    <div v-if="freePackageNeededPrice !== 0" class="free-price-item green" style="display: inline-block;">满 {{ freePackageNeededPrice | addComma }} 免包装费</div>
+                                    <div v-if="freeShippingStatus === '1'" class="free-price-item red" style="display: inline-block;">满 {{ freeShippingNeededPrice | addComma }} 包邮</div>
+                                    <div v-if="freePackageStatus === '1'" class="free-price-item green" style="display: inline-block;">满 {{ freePackageNeededPrice | addComma }} 免包装费</div>
                                 </div>
                             </div>
                         </b-row>
@@ -432,6 +438,8 @@ export default {
                     this.cartItems.filter(res => {
                         let tempOrigin = []
                         res.checked = false
+                        res.visible = false // 점포 체크박스보임상태
+
                         res.goods.filter(prod => {
                             let exist = ''
 
@@ -447,10 +455,16 @@ export default {
                             prod.goodsIconUrl = exist
                             prod.checked = false
                             tempOrigin[prod.id] = prod.num
+
+                            if (prod.status === '1') {
+                                res.visible = true
+                            }
                         })
 
                         this.originalGoodsNum[res.shopId] = tempOrigin
                     })
+
+                    console.log(this.cartItems);
                 }
 
                 this.$nuxt.$emit('handleLoading', false)
@@ -469,7 +483,7 @@ export default {
                     shop.checked = !shop.checked
 
                     shop.goods.filter(prod => {
-                        prod.checked = prod.status === '1' && shop.checked
+                        prod.checked = !this.isShowEdit ? prod.status === '1' && shop.checked : shop.checked
                     })
                 }
 
@@ -554,7 +568,7 @@ export default {
             temp.filter(shop => {
                 if (shop.shopId === shopid) {
                     shop.goods.filter(prod => {
-                        if (!prod.checked) {
+                        if (!prod.checked && prod.status === '1') {
                             isCheck = true
                         }
                     })
@@ -630,7 +644,11 @@ export default {
                 shop.checked = this.isCheckAll
 
                 shop.goods.filter(prod => {
-                    prod.checked = this.isCheckAll
+                    if (!this.isShowEdit) {
+                        prod.checked = prod.status === '1' && this.isCheckAll
+                    } else {
+                        prod.checked = this.isCheckAll
+                    }
                 })
 
                 temp.push(shop)
